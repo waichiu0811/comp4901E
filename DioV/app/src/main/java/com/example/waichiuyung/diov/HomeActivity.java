@@ -2,6 +2,7 @@ package com.example.waichiuyung.diov;
 
 
 import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.support.design.widget.TabLayout;
@@ -40,6 +41,7 @@ public class HomeActivity extends BaseActivity
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Home"));
+        //tabLayout.setTabTextColors(Color.parseColor("#000000"), Color.parseColor("#ff3377")); // pink
         tabLayout.addTab(tabLayout.newTab().setText("Zzz"));
         tabLayout.addTab(tabLayout.newTab().setText("Pressure"));
         tabLayout.addTab(tabLayout.newTab().setText("Focus"));

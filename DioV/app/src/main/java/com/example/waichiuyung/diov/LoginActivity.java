@@ -19,7 +19,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -30,6 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +44,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -76,11 +80,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private TextView txtSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -97,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        ImageView mEmailSignInButton = (ImageView) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,6 +113,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        txtSignUp = (TextView)findViewById(R.id.txtSignUp);
+        txtSignUp.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(getString(R.string.sign_up_link)));
+                startActivity(i);
+            }
+        });
     }
 
     private void populateAutoComplete() {
@@ -309,15 +325,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
+
+
+
+
     public class UserLoginTask extends AsyncTask<Void, Void, JSONObject> {
 
         public final MediaType JSON_TYPE
                 = MediaType.parse("application/json; charset=utf-8");
-
+        protected String baseUrl = "https://void-comp4901e.herokuapp.com/";
         OkHttpClient client = new OkHttpClient();
+
         private final String mEmail;
         private final String mPassword;
-        private String baseUrl = "https://void-comp4901e.herokuapp.com/";
         private String loginUrl = "auth/sign_in.json";
         private String url = baseUrl+loginUrl;
 
@@ -325,6 +345,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mEmail = email;
             mPassword = password;
         }
+
 
         @Override
         protected JSONObject doInBackground(Void... params) {
@@ -360,7 +381,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-            if (result.has("errors")) {
+            if (result == null ||result.has("errors")) {
                 try {
                     String errors = result.getJSONArray("errors").toString();
                     Toast.makeText(LoginActivity.this, errors, Toast.LENGTH_LONG).show();

@@ -4,6 +4,7 @@ package com.example.waichiuyung.diov;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.media.MediaPlayer;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -22,10 +23,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class HomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    MediaPlayer mySound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,18 @@ public class HomeActivity extends BaseActivity
         setContentView(R.layout.activity_home);
         init_toolbar();
         init_navigation();
+
+
+        mySound = MediaPlayer.create(this,R.raw.sleep);
+
     }
+    public void playMusic(View view) {
+        mySound.start();
+    }
+    public void stopMusic(View view) {
+        mySound.pause();
+    }
+
 
     private void init_toolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -41,10 +55,15 @@ public class HomeActivity extends BaseActivity
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Home"));
-        //tabLayout.setTabTextColors(Color.parseColor("#000000"), Color.parseColor("#ff3377")); // pink
-        tabLayout.addTab(tabLayout.newTab().setText("Zzz"));
+
+       // tabLayout.getTabAt(0).setIcon(R.drawable.home_tool); //icon instead of string
+        tabLayout.setTabTextColors(Color.parseColor("#000000"), Color.parseColor("#ff3377")); // pink
+        tabLayout.addTab(tabLayout.newTab().setText("Sleeping"));
+      //  tabLayout.getTabAt(1).setIcon(R.drawable.sleeping_navi);
         tabLayout.addTab(tabLayout.newTab().setText("Pressure"));
+      //  tabLayout.getTabAt(2).setIcon(R.drawable.pressure_navi);
         tabLayout.addTab(tabLayout.newTab().setText("Focus"));
+      //  tabLayout.getTabAt(3).setIcon(R.drawable.focus_navi);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
@@ -121,7 +140,7 @@ public class HomeActivity extends BaseActivity
         // Handle navigation view item clicks here.
 
         Fragment fragment = null;
-
+android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         Class fragmentClass;
 
         int id = item.getItemId();
@@ -131,10 +150,20 @@ public class HomeActivity extends BaseActivity
         } else if (id == R.id.nav_finger) {
 
         } else if (id == R.id.nav_sleeping) {
+            fragment=new SleepingFragment();
+            fragmentTransaction.replace(R.id.container,fragment);
+            fragmentTransaction.commit();
+            mySound = MediaPlayer.create(this,R.raw.sleep);
 
         } else if (id == R.id.nav_pressure) {
+            fragment=new PressureFragment();
+            fragmentTransaction.replace(R.id.container,fragment);
+            fragmentTransaction.commit();
 
         } else if (id == R.id.nav_focus) {
+            fragment=new FocusFragment();
+            fragmentTransaction.replace(R.id.container,fragment);
+            fragmentTransaction.commit();
 
         } else if (id == R.id.nav_setting) {
 
@@ -146,4 +175,7 @@ public class HomeActivity extends BaseActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
 }

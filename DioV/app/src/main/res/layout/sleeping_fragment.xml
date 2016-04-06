@@ -10,18 +10,104 @@
         android:layout_height="0dip"
         android:layout_weight="1"
         android:background="@drawable/sleeping_1" >
+
+        <ImageButton
+            android:layout_width="94dp"
+            android:layout_height="51dp"
+            android:id="@+id/imageButton1"
+            android:layout_gravity="left|top"
+            android:src="@drawable/small_play"
+            android:background="@android:color/transparent"
+            android:onClick="playMusic"
+            android:contentDescription="play" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="44dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Total Relaxation"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal|top"
+            android:autoText="false"
+            android:textColor="#4067af" />
+
+        <ImageButton
+            android:layout_width="94dp"
+            android:layout_height="51dp"
+            android:id="@+id/pause1"
+            android:src="@drawable/pause"
+            android:onClick="stopMusic"
+            android:background="@android:color/transparent"
+            android:layout_gravity="right|top" />
+
     </FrameLayout>
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
         android:background="@drawable/sleeping_2" >
+
+        <ImageButton
+            android:layout_width="94dp"
+            android:layout_height="51dp"
+            android:id="@+id/imageButton2"
+            android:layout_gravity="left|top"
+            android:src="@drawable/small_play"
+            android:background="@android:color/transparent"
+            android:onClick="playMusic"
+            android:contentDescription="play" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Sleep Deeply Overview"
+            android:id="@+id/textView3"
+            android:layout_gravity="center_horizontal|top"
+            android:textColor="#4067af" />
+
+        <ImageButton
+            android:layout_width="94dp"
+            android:layout_height="51dp"
+            android:id="@+id/pause2"
+            android:layout_gravity="right|top"
+            android:src="@drawable/pause"
+            android:onClick="stopMusic"
+            android:background="@android:color/transparent" />
     </FrameLayout>
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
         android:background="@drawable/sleeping_3" >
+
+        <ImageButton
+            android:layout_width="94dp"
+            android:layout_height="51dp"
+            android:id="@+id/imageButton3"
+            android:layout_gravity="left|top"
+            android:src="@drawable/small_play"
+            android:background="@android:color/transparent"
+            android:onClick="playMusic"
+            android:contentDescription="play" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Sleep Deeply Hypnosis Meditation"
+            android:id="@+id/textView4"
+            android:layout_gravity="center_horizontal|top"
+            android:textColor="#4067af" />
+
+        <ImageButton
+            android:layout_width="94dp"
+            android:layout_height="51dp"
+            android:id="@+id/pause3"
+            android:layout_gravity="right|top"
+            android:src="@drawable/pause"
+            android:onClick="stopMusic"
+            android:background="@android:color/transparent" />
     </FrameLayout>
 
 </LinearLayout>

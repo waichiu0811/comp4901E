@@ -4,31 +4,31 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_overview"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/home_tool"
             android:title="Overview" />
         <item
             android:id="@+id/nav_finger"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/finger_navi"
             android:title="Finger Exercise" />
         <item
             android:id="@+id/nav_sleeping"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/sleeping_navi"
             android:title="Sleeping Quality" />
         <item
             android:id="@+id/nav_pressure"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/pressure_navi"
             android:title="Pressure Relief" />
         <item
             android:id="@+id/nav_focus"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/focus_navi"
             android:title="Focus Training" />
         <item
             android:id="@+id/nav_setting"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/setting_navi"
             android:title="Setting" />
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/logout_navi"
             android:title="Log Out" />
     </group>
 

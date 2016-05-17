@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff">
+
+    <TextView
+        android:id="@+id/titleExercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finger Exercise"
+        android:textColor="#333"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100px"/>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+        <TextView
+            android:text="minute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_marginLeft="40px"
+            android:textColor="#333"/>
+        <TextView
+            android:text="second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_marginLeft="40px"
+            android:textColor="#333"/>
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/exerciseMinute"
+            android:layout_margin="30px"
+            android:layout_column="1"/>
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/exerciseSecond"
+            android:layout_margin="30px"
+            android:layout_column="2"/>
+    </GridLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnStartExercise"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="100px"
+        android:text="Start"
+        android:layout_alignParentBottom="true"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/debugText"
+        android:textColor="#333"
+        android:text="debugText"/>
+
+</RelativeLayout>

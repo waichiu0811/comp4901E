@@ -2,10 +2,14 @@ package com.example.waichiuyung.diov;
 
 
 import android.app.FragmentTransaction;
+import android.app.TimePickerDialog;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.media.MediaPlayer;
 
+import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,14 +25,31 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.lang.reflect.Field;
 
 
 public class HomeActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, NumberPicker.OnValueChangeListener{
     MediaPlayer mySound;
+    FloatingActionButton btnExercise;
+    boolean doubleBackToExitPressedOnce = false;
+    private Handler mHandler;
+    private ViewPager viewPager;
+    private FrameLayout frame;
+    private TextView mDebugText;
+    private int exerciseMinute,exerciseSecond;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +58,29 @@ public class HomeActivity extends BaseActivity
         init_toolbar();
         init_navigation();
 
-
         mySound = MediaPlayer.create(this,R.raw.sleep);
+        btnExercise = (FloatingActionButton)findViewById(R.id.floatingActionButton);
+        btnExercise.setOnClickListener(this);
+        mHandler = new Handler();
 
+        //init exercise frame
+        frame = (FrameLayout)findViewById(R.id.exerciseFrame);
+        View view = LayoutInflater.from(this).inflate(R.layout.exercise_fragment, null);
+        frame.addView(view);
+        NumberPicker durationMinute = (NumberPicker)findViewById(R.id.exerciseMinute);
+        NumberPicker durationSecond = (NumberPicker)findViewById(R.id.exerciseSecond);
+        durationMinute.setMinValue(0);
+        durationMinute.setMaxValue(5);
+        durationMinute.setValue(3);
+        durationMinute.setOnValueChangedListener(this);
+        durationSecond.setMinValue(0);
+        durationSecond.setMaxValue(59);
+        durationSecond.setValue(0);
+        durationSecond.setOnValueChangedListener(this);
+        exerciseMinute = 3;
+        exerciseSecond = 0;
+        mDebugText = (TextView)findViewById(R.id.debugText);
+        frame.setVisibility(View.INVISIBLE);
     }
     public void playMusic(View view) {
         mySound.start();
@@ -66,14 +107,15 @@ public class HomeActivity extends BaseActivity
       //  tabLayout.getTabAt(3).setIcon(R.drawable.focus_navi);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new com.example.waichiuyung.diov.PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        final PagerAdapter adapter = new com.example.waichiuyung.diov.PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()); //extra finger exercise fragment
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                frame.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -107,8 +149,23 @@ public class HomeActivity extends BaseActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        } else if (frame.getVisibility() == View.VISIBLE) {
+            frame.setVisibility(View.INVISIBLE);
+        }else{
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click Back again to exit", Toast.LENGTH_SHORT).show();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+
+            //super.onBackPressed();
         }
     }
 
@@ -150,25 +207,26 @@ android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragm
         } else if (id == R.id.nav_finger) {
 
         } else if (id == R.id.nav_sleeping) {
-            fragment=new SleepingFragment();
-            fragmentTransaction.replace(R.id.container,fragment);
-            fragmentTransaction.commit();
-            mySound = MediaPlayer.create(this,R.raw.sleep);
+            viewPager.setCurrentItem(1);
+            //fragment=new SleepingFragment();
+            //fragmentTransaction.replace(R.id.container,fragment);
+            //fragmentTransaction.commit();
+            //mySound = MediaPlayer.create(this,R.raw.sleep);
 
         } else if (id == R.id.nav_pressure) {
-            fragment=new PressureFragment();
-            fragmentTransaction.replace(R.id.container,fragment);
-            fragmentTransaction.commit();
+            viewPager.setCurrentItem(2);
+            //fragment=new PressureFragment();
+            //fragmentTransaction.replace(R.id.container,fragment);
+            //fragmentTransaction.commit();
 
         } else if (id == R.id.nav_focus) {
-            fragment=new FocusFragment();
-            fragmentTransaction.replace(R.id.container,fragment);
-            fragmentTransaction.commit();
+            viewPager.setCurrentItem(3);
+            //fragment=new FocusFragment();
+            //fragmentTransaction.replace(R.id.container,fragment);
+            //fragmentTransaction.commit();
 
         } else if (id == R.id.nav_setting) {
-
         } else if (id == R.id.nav_logout) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -177,5 +235,35 @@ android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragm
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.floatingActionButton:
+                //viewPager.setVisibility(View.INVISIBLE);
 
+                if (frame.getVisibility() == View.VISIBLE){
+                    frame.setVisibility(View.INVISIBLE);
+                }else {
+                    frame.setVisibility(View.VISIBLE);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        switch (picker.getId()){
+            case R.id.exerciseMinute:
+                exerciseMinute = newVal;
+                mDebugText.setText("duration: "+ (exerciseMinute*60+exerciseSecond));
+                break;
+            case R.id.exerciseSecond:
+                exerciseSecond = newVal;
+                mDebugText.setText("duration: "+ (exerciseMinute*60+exerciseSecond));
+                break;
+
+        }
+    }
 }

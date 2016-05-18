@@ -3,6 +3,7 @@ package com.example.waichiuyung.diov;
 
 import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.NumberPicker;
@@ -43,13 +45,13 @@ import java.lang.reflect.Field;
 public class HomeActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, NumberPicker.OnValueChangeListener{
     MediaPlayer mySound;
-    FloatingActionButton btnExercise;
     boolean doubleBackToExitPressedOnce = false;
     private Handler mHandler;
     private ViewPager viewPager;
     private FrameLayout frame;
     private TextView mDebugText;
     private int exerciseMinute,exerciseSecond;
+    private View exerciseView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +61,14 @@ public class HomeActivity extends BaseActivity
         init_navigation();
 
         mySound = MediaPlayer.create(this,R.raw.sleep);
-        btnExercise = (FloatingActionButton)findViewById(R.id.floatingActionButton);
-        btnExercise.setOnClickListener(this);
+        FloatingActionButton mbtnExercise = (FloatingActionButton)findViewById(R.id.floatingActionButton);
+        mbtnExercise.setOnClickListener(this);
         mHandler = new Handler();
 
         //init exercise frame
         frame = (FrameLayout)findViewById(R.id.exerciseFrame);
-        View view = LayoutInflater.from(this).inflate(R.layout.exercise_fragment, null);
-        frame.addView(view);
+        exerciseView = LayoutInflater.from(this).inflate(R.layout.exercise_fragment, null);
+        frame.addView(exerciseView,0);
         NumberPicker durationMinute = (NumberPicker)findViewById(R.id.exerciseMinute);
         NumberPicker durationSecond = (NumberPicker)findViewById(R.id.exerciseSecond);
         durationMinute.setMinValue(0);
@@ -205,7 +207,11 @@ android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragm
         if (id == R.id.nav_overview) {
             // Handle the camera action
         } else if (id == R.id.nav_finger) {
-
+            if (frame.getVisibility() == View.VISIBLE){
+                frame.setVisibility(View.INVISIBLE);
+            }else {
+                frame.setVisibility(View.VISIBLE);
+            }
         } else if (id == R.id.nav_sleeping) {
             viewPager.setCurrentItem(1);
             //fragment=new SleepingFragment();
@@ -239,13 +245,28 @@ android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragm
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.floatingActionButton:
-                //viewPager.setVisibility(View.INVISIBLE);
-
                 if (frame.getVisibility() == View.VISIBLE){
                     frame.setVisibility(View.INVISIBLE);
                 }else {
                     frame.setVisibility(View.VISIBLE);
+                    Button mbtnStartExercise = (Button)findViewById(R.id.btnStartExercise);
+                    mbtnStartExercise.setOnClickListener(this);
                 }
+                break;
+            case R.id.btnStartExercise:
+                Intent i = new Intent(getApplicationContext(), UnityPlayerActivity.class);
+                i.putExtra("duration",exerciseMinute*60+exerciseSecond);
+                startActivity(i);
+                //mUnityPlayer = new UnityPlayer(this);
+                //setContentView(mUnityPlayer);
+                //mUnityPlayer.requestFocus();
+                //initUnity();
+                //LayoutParams lp = new LayoutParams (LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+                //frame.removeView(exerciseView);
+                //frame.addView(mUnityPlayer.getView(), 0);
+                //frame.addView(exerciseView,1);
+                //mUnityPlayer.resume();
+                //unityStart = true;
                 break;
             default:
                 break;
@@ -257,7 +278,7 @@ android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragm
         switch (picker.getId()){
             case R.id.exerciseMinute:
                 exerciseMinute = newVal;
-                mDebugText.setText("duration: "+ (exerciseMinute*60+exerciseSecond));
+                mDebugText.setText("duration: " + (exerciseMinute * 60 + exerciseSecond));
                 break;
             case R.id.exerciseSecond:
                 exerciseSecond = newVal;

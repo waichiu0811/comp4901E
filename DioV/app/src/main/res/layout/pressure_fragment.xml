@@ -5,23 +5,114 @@
     android:orientation="vertical"
     android:weightSum="3" >
 
+
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
         android:background="@drawable/pressure_1" >
+
+        <ImageButton
+            android:layout_width="94dp"
+            android:layout_height="51dp"
+            android:id="@+id/imageButton1"
+            android:layout_gravity="left|top"
+            android:src="@drawable/small_play"
+            android:background="@android:color/transparent"
+            android:onClick="playMusic"
+            android:contentDescription="play" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="44dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Begin Here"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal|top"
+            android:autoText="false"
+            android:textColor="@color/white"
+            android:textSize = "13sp"/>
+
+        <ImageButton
+            android:layout_width="94dp"
+            android:layout_height="51dp"
+            android:id="@+id/pause1"
+            android:src="@drawable/pause"
+            android:onClick="stopMusic"
+            android:background="@android:color/transparent"
+            android:layout_gravity="right|top" />
+
     </FrameLayout>
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
         android:background="@drawable/pressure_2" >
+
+        <ImageButton
+            android:layout_width="94dp"
+            android:layout_height="51dp"
+            android:id="@+id/imageButton2"
+            android:layout_gravity="left|top"
+            android:src="@drawable/small_play"
+            android:background="@android:color/transparent"
+            android:onClick="playMusic"
+            android:contentDescription="play" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Release sadness"
+            android:id="@+id/textView3"
+            android:layout_gravity="center_horizontal|top"
+            android:textColor="@color/white"
+            android:textSize = "13sp"/>
+
+        <ImageButton
+            android:layout_width="94dp"
+            android:layout_height="51dp"
+            android:id="@+id/pause2"
+            android:layout_gravity="right|top"
+            android:src="@drawable/pause"
+            android:onClick="stopMusic"
+            android:background="@android:color/transparent" />
     </FrameLayout>
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
         android:background="@drawable/pressure_3" >
+
+        <ImageButton
+            android:layout_width="94dp"
+            android:layout_height="51dp"
+            android:id="@+id/imageButton3"
+            android:layout_gravity="left|top"
+            android:src="@drawable/small_play"
+            android:background="@android:color/transparent"
+            android:onClick="playMusic"
+            android:contentDescription="play" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Let go of fear"
+            android:id="@+id/textView4"
+            android:layout_gravity="center_horizontal|top"
+            android:textColor="@color/white"
+            android:textSize = "13sp"/>
+
+        <ImageButton
+            android:layout_width="94dp"
+            android:layout_height="51dp"
+            android:id="@+id/pause3"
+            android:layout_gravity="right|top"
+            android:src="@drawable/pause"
+            android:onClick="stopMusic"
+            android:background="@android:color/transparent" />
     </FrameLayout>
+
 
 </LinearLayout>

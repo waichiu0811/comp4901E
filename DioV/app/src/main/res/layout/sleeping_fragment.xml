@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="3" >
-
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
@@ -29,7 +28,8 @@
             android:id="@+id/textView2"
             android:layout_gravity="center_horizontal|top"
             android:autoText="false"
-            android:textColor="#4067af" />
+            android:textColor="@color/white"
+            android:textSize = "13sp"/>
 
         <ImageButton
             android:layout_width="94dp"
@@ -64,7 +64,8 @@
             android:text="Sleep Deeply Overview"
             android:id="@+id/textView3"
             android:layout_gravity="center_horizontal|top"
-            android:textColor="#4067af" />
+            android:textColor="@color/white"
+            android:textSize = "13sp"/>
 
         <ImageButton
             android:layout_width="94dp"
@@ -98,7 +99,8 @@
             android:text="Sleep Deeply Hypnosis Meditation"
             android:id="@+id/textView4"
             android:layout_gravity="center_horizontal|top"
-            android:textColor="#4067af" />
+            android:textColor="@color/white"
+            android:textSize = "13sp"/>
 
         <ImageButton
             android:layout_width="94dp"

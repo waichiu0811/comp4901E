@@ -1,6 +1,7 @@
 package com.example.waichiuyung.diov;
 
 
+import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -62,7 +63,12 @@ public class HomeActivity extends BaseActivity
 
         mySound = MediaPlayer.create(this,R.raw.sleep);
         FloatingActionButton mbtnExercise = (FloatingActionButton)findViewById(R.id.floatingActionButton);
-        mbtnExercise.setOnClickListener(this);
+        mbtnExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                show();
+            }
+        });
         mHandler = new Handler();
 
         //init exercise frame
@@ -240,37 +246,25 @@ android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragm
         return true;
     }
 
+    public void show()
+    {
+
+        Dialog d = new Dialog(this);
+        d.setContentView(R.layout.exercise_fragment);
+        d.setTitle("Finger Exercise");
+        Button b1 = (Button) d.findViewById(R.id.btnStartExercise);
+        b1.setOnClickListener(this);
+        d.show();
+    }
+
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.floatingActionButton:
-                if (frame.getVisibility() == View.VISIBLE){
-                    frame.setVisibility(View.INVISIBLE);
-                }else {
-                    frame.setVisibility(View.VISIBLE);
-                    Button mbtnStartExercise = (Button)findViewById(R.id.btnStartExercise);
-                    mbtnStartExercise.setOnClickListener(this);
-                }
-                break;
-            case R.id.btnStartExercise:
+
                 Intent i = new Intent(getApplicationContext(), UnityPlayerActivity.class);
                 i.putExtra("duration",exerciseMinute*60+exerciseSecond);
                 startActivity(i);
-                //mUnityPlayer = new UnityPlayer(this);
-                //setContentView(mUnityPlayer);
-                //mUnityPlayer.requestFocus();
-                //initUnity();
-                //LayoutParams lp = new LayoutParams (LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
-                //frame.removeView(exerciseView);
-                //frame.addView(mUnityPlayer.getView(), 0);
-                //frame.addView(exerciseView,1);
-                //mUnityPlayer.resume();
-                //unityStart = true;
-                break;
-            default:
-                break;
-        }
+
     }
 
     @Override

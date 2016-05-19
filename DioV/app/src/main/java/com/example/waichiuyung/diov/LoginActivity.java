@@ -81,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private TextView txtSignUp;
+    private TextView txtSkip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +124,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 startActivity(i);
             }
         });
+
+        txtSkip = (TextView)findViewById(R.id.skip);
+        txtSkip.setOnClickListener(
+                new OnClickListener() {
+                    public void onClick(View v) {
+                        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(i);
+                    }
+                }
+        );
     }
 
     private void populateAutoComplete() {

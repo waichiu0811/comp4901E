@@ -15,7 +15,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
@@ -42,8 +41,7 @@ import android.widget.Toast;
 import java.lang.reflect.Field;
 
 
-public class HomeActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, NumberPicker.OnValueChangeListener{
+public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, NumberPicker.OnValueChangeListener{
     MediaPlayer mySound;
     boolean doubleBackToExitPressedOnce = false;
     private Handler mHandler;
@@ -52,6 +50,9 @@ public class HomeActivity extends BaseActivity
     private TextView mDebugText;
     private int exerciseMinute,exerciseSecond;
     private View exerciseView;
+    private FitbitClient fitbitClient;
+
+    PagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +84,24 @@ public class HomeActivity extends BaseActivity
         exerciseSecond = 0;
         mDebugText = (TextView)findViewById(R.id.debugText);
         frame.setVisibility(View.INVISIBLE);
+        initChart();
     }
     public void playMusic(View view) {
         mySound.start();
     }
     public void stopMusic(View view) {
         mySound.pause();
+    }
+
+    public void initChart() {
+        String token = getTokenFromIntent(getIntent());
+        if (token != null) {
+            fitbitClient = FitbitClient.getInstance();
+            fitbitClient.setTokenToHeader(token);
+            fitbitClient.getHeartData(adapter.getHomeFragment());
+            fitbitClient.getSleepData(adapter.getHomeFragment());
+            fitbitClient.getUserProfile(adapter.getHomeFragment());
+        }
     }
 
 
@@ -110,7 +123,7 @@ public class HomeActivity extends BaseActivity
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new com.example.waichiuyung.diov.PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()); //extra finger exercise fragment
+        adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()); //extra finger exercise fragment
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

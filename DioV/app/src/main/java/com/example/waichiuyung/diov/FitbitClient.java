@@ -10,6 +10,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -21,6 +22,8 @@ public class FitbitClient {
     private static FitbitClient fitbitClient;
 
     public static AsyncHttpClient client = new AsyncHttpClient();
+
+    String sleepDataLocal = null;
 
     private FitbitClient() {
         client.setEnableRedirects(true);
@@ -89,8 +92,8 @@ public class FitbitClient {
 
     public void getSleepData(final FitbitResponseHandler fitbitResponseHandler) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String url = "https://api.fitbit.com/1/user/-/sleep/date/2015-08-23.json";
-//        String url = "https://api.fitbit.com/1/user/-/sleep/date/"+format.format(new Date())+".json";
+//        String url = "https://api.fitbit.com/1/user/-/sleep/date/2015-08-23.json";
+        String url = "https://api.fitbit.com/1/user/-/sleep/date/"+format.format(new Date())+".json";
         Log.i("url", url);
         client.get(url, null, new FitbitJsonResponseHandler() {
 
@@ -113,5 +116,13 @@ public class FitbitClient {
             super.onFailure(statusCode, headers, responseString, throwable);
             Log.e("error", responseString);
         }
+    }
+
+    public String getSleepDataLocal() {
+        return sleepDataLocal;
+    }
+
+    public void setSleepDataLocal(String sleepDataLocal) {
+        this.sleepDataLocal = sleepDataLocal;
     }
 }

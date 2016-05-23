@@ -10,6 +10,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
 
+    HomeFragment tab1;
+    SleepingFragment tab2;
+    PressureFragment tab3;
+    FocusFragment tab4;
+
     public PagerAdapter(FragmentManager fm, int NumOfTabs) {
         super(fm);
         this.mNumOfTabs = NumOfTabs;
@@ -20,20 +25,44 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                HomeFragment tab1 = new HomeFragment();
-                return tab1;
+                return getHomeFragment();
             case 1:
-                SleepingFragment tab2 = new SleepingFragment();
-                return tab2;
+                return getSleepingFragment();
             case 2:
-                PressureFragment tab3 = new PressureFragment();
-                return tab3;
+                return getPressureFragment();
             case 3:
-                FocusFragment tab4 = new FocusFragment();
-                return tab4;
+                return getFocusFragment();
             default:
                 return null;
         }
+    }
+
+    public HomeFragment getHomeFragment() {
+        if (tab1 == null) {
+            tab1 = new HomeFragment();
+        }
+        return tab1;
+    }
+
+    public SleepingFragment getSleepingFragment() {
+        if (tab2 == null) {
+            tab2 = new SleepingFragment();
+        }
+        return tab2;
+    }
+
+    public PressureFragment getPressureFragment() {
+        if (tab3 == null) {
+            tab3 = new PressureFragment();
+        }
+        return tab3;
+    }
+
+    public FocusFragment getFocusFragment() {
+        if (tab4 == null) {
+            tab4 = new FocusFragment();
+        }
+        return tab4;
     }
 
     @Override

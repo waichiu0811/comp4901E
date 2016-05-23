@@ -25,16 +25,26 @@
         android:isGame="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBarBase">
         <activity
             android:name=".HomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="get-token"
+                    android:scheme="fitbit-void" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,8 +55,7 @@
             android:name=".UnityPlayerActivity"
             android:label="@string/app_name"
             android:process=":unityKillMe"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="unityplayer.UnityActivity"
                 android:value="true" />
@@ -55,8 +64,7 @@
                 android:value="false" />
         </activity>
         <activity android:name=".FitbitAuthActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
